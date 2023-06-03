@@ -37,13 +37,7 @@ public class DirectorServiceImpl extends BaseService<Director,
     public DirectorDtoResponse update(DirectorDtoRequest entity) throws EntityNotFoundException {
         Director updatedEntity = repository.findById(entity.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Director not found"));
-        updatedEntity.setDirectorsFio(entity.getDirectorsFio());
-        updatedEntity.setPosition(entity.getPosition());
-
-//        List<FilmDtoRequest> filmListDto = entity.getFilmList();
-//        List<Film> filmListEntity = filmMapperRequest.toEntity(filmListDto);
-//        updatedEntity.setFilmList(filmListEntity);
-
+        mapperRequest.partialUpdate(updatedEntity,entity);
         Director savedEntity = repository.save(updatedEntity);
         return mapperResponse.toDto(savedEntity);
     }
@@ -55,7 +49,6 @@ public class DirectorServiceImpl extends BaseService<Director,
         Director director = repository.findById(directorId)
                 .orElseThrow(() -> new EntityNotFoundException("Director not found"));
         List<Film> filmListEntity = director.getFilmList();
-//        Set<Film> filmListEntity = director.getFilmList();
         if (!filmListEntity.contains(film)) {
             filmListEntity.add(film);
             repository.save(director);

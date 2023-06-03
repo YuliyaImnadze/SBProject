@@ -3,7 +3,6 @@ package com.example.sb.controller;
 import com.example.sb.dto.BaseEntityDtoRequest;
 import com.example.sb.dto.BaseEntityDtoResponse;
 import com.example.sb.entity.BaseEntity;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

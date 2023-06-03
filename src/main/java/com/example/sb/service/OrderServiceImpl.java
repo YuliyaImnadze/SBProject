@@ -39,16 +39,10 @@ public class OrderServiceImpl extends BaseService<Order,
     @Transactional
     @Override
     public OrderDtoResponse update(OrderDtoRequest entity) throws EntityNotFoundException {
-        Order orderEntity = mapperRequest.toEntity(entity);
-        Order updated = repository.findById(entity.getId())
+        Order updatedEntity = repository.findById(entity.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Order not found"));
-        updated.setRentPeriod(orderEntity.getRentPeriod());
-        updated.setPurchase(orderEntity.isPurchase());
-//        List<FilmDtoRequest> filmListDto = entity.getFilmList();
-//        List<Film> filmListEntity = filmMapperRequest.toEntity(filmListDto);
-//        updated.setFilmList(filmListEntity);
-        updated.setOwner(orderEntity.getOwner());
-        Order savedEntity = repository.save(updated);
+        mapperRequest.partialUpdate(updatedEntity,entity);
+        Order savedEntity = repository.save(updatedEntity);
         return mapperResponse.toDto(savedEntity);
     }
 

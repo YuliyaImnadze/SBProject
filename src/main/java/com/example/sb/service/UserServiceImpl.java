@@ -41,15 +41,7 @@ public class UserServiceImpl extends BaseService<User,
     public UserDtoResponse update(UserDtoRequest entity)throws EntityNotFoundException {
         User updatedEntity = repository.findById(entity.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        updatedEntity.setLogin(entity.getLogin());
-        updatedEntity.setPassword(entity.getPassword());
-        updatedEntity.setFirstName(entity.getFirstName());
-        updatedEntity.setLastName(entity.getLastName());
-        updatedEntity.setMiddleName(entity.getMiddleName());
-        updatedEntity.setBirthDate(entity.getBirthDate());
-        updatedEntity.setPhone(entity.getPhone());
-        updatedEntity.setAddress(entity.getAddress());
-        updatedEntity.setEmail(entity.getEmail());
+        mapperRequest.partialUpdate(updatedEntity,entity);
         User savedEntity = repository.save(updatedEntity);
         return mapperResponse.toDto(savedEntity);
     }

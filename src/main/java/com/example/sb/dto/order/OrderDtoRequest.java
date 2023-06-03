@@ -17,6 +17,4 @@ public class OrderDtoRequest extends BaseEntityDtoRequest implements Serializabl
 
     private int rentPeriod;
     private boolean purchase;
-    private UserDtoRequest owner;
-    private List<FilmDtoRequest> filmList = new ArrayList<>(); // не надо. подумать
 }

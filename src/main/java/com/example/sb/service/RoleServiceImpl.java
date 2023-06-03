@@ -30,14 +30,10 @@ public class RoleServiceImpl extends BaseService<Role,
     @Transactional
     @Override
     public RoleDtoResponse update(RoleDtoRequest entity) throws EntityNotFoundException {
-        Role updated = repository.findById(entity.getId())
+        Role updatedEntity = repository.findById(entity.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Role not found"));
-        updated.setTitle(entity.getTitle());
-        updated.setDescription(entity.getTitle());
-//        List<UserDtoRequest> userListDto = entity.getUserList();
-//        List<User> userListEntity = userMapperRequest.toEntity(userListDto);
-//        updated.setUserList(userListEntity);
-        Role savedEntity = repository.save(updated);
+        mapperRequest.partialUpdate(updatedEntity, entity);
+        Role savedEntity = repository.save(updatedEntity);
         return mapperResponse.toDto(savedEntity);
     }
 
