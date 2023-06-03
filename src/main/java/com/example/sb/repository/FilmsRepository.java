@@ -1,10 +1,10 @@
 package com.example.sb.repository;
 
-import com.example.sb.entity.Films;
+import com.example.sb.entity.Film;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FilmsRepository extends CommonRepository<Films> {
+public interface FilmsRepository extends CommonRepository<Film> {
 
 
 }

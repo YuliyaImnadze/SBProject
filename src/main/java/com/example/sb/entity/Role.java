@@ -8,17 +8,17 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "role")
+@Table(name = "sb_role")
 public class Role extends BaseEntity {
 
-    @Column
+    @Column(name = "title")
     private String title;
 
-    @Column
+    @Column(name = "description")
     private String description;
 
     @OneToMany(mappedBy = "role", cascade = {CascadeType.REMOVE, CascadeType.DETACH})
     // при удалении роли объекты Users связанные с этой ролью не будут удалены, данные останутся в базе
-    private List<Users> usersList;
+    private List<User> userList;
 
 }

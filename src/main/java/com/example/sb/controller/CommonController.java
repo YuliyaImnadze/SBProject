@@ -1,5 +1,7 @@
 package com.example.sb.controller;
 
+import com.example.sb.dto.BaseEntityDtoRequest;
+import com.example.sb.dto.BaseEntityDtoResponse;
 import com.example.sb.entity.BaseEntity;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -8,22 +10,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-public interface CommonController<E extends BaseEntity> {
+public interface CommonController<E extends BaseEntity, D extends BaseEntityDtoRequest,
+        T extends BaseEntityDtoResponse> {
 
     @GetMapping
-    ResponseEntity<List<E>> showAll();
+    ResponseEntity<List<T>> showAll();
 
     @GetMapping
-    ResponseEntity<E> showById(@RequestParam UUID id);
+    ResponseEntity<?> showById(@RequestParam UUID id);
 
     @PostMapping
-    ResponseEntity<E> create(@RequestBody E entity);
+    ResponseEntity<?> create(@RequestBody D entity);
 
     @PutMapping
-    ResponseEntity<E> update(@RequestBody E entity);
+    ResponseEntity<?> update(@RequestBody D entity);
 
     @DeleteMapping
-    ResponseEntity<E> delete(@RequestBody E entity);
+    ResponseEntity<String> delete(@RequestBody D entity);
 
 
 }

@@ -1,22 +1,27 @@
 package com.example.sb.service;
 
+
+import com.example.sb.dto.BaseEntityDtoRequest;
+import com.example.sb.dto.BaseEntityDtoResponse;
 import com.example.sb.entity.BaseEntity;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-public interface CommonService<E extends BaseEntity> {
+public interface CommonService<E extends BaseEntity,
+        D extends BaseEntityDtoRequest, T extends BaseEntityDtoResponse> {
 
-    List<E> findAll();
+    List<T> findAll();
 
-    Optional<E> findById(UUID id);
+    T findById(UUID id) throws EntityNotFoundException;
 
-    Optional<E> save(E entity);
+    T save(D entity) throws DataIntegrityViolationException;
 
-    Optional<E> update(E entity);
+    T update(D entity) throws EntityNotFoundException;
 
-    void delete(E entity);
+    void delete(D entity); // здесь нужна ошибка? какая? общая?
 
 
 }
