@@ -1,7 +1,5 @@
 package com.example.sb.mapper.director;
 
-
-import com.example.sb.dto.director.DirectorDtoRequest;
 import com.example.sb.dto.director.DirectorDtoResponse;
 import com.example.sb.entity.Director;
 import com.example.sb.mapper.CommonMapperResponse;
@@ -11,7 +9,6 @@ import org.mapstruct.ReportingPolicy;
 import com.example.sb.entity.Film;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 

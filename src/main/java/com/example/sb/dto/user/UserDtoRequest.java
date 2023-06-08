@@ -2,6 +2,7 @@ package com.example.sb.dto.user;
 
 
 import com.example.sb.dto.BaseEntityDtoRequest;
+import com.example.sb.dto.role.RoleDtoRequest;
 import lombok.Data;
 import lombok.Value;
 
@@ -24,4 +25,5 @@ public class UserDtoRequest  extends BaseEntityDtoRequest implements Serializabl
     private String phone;
     private String address;
     private String email;
+    private RoleDtoRequest role;
 }

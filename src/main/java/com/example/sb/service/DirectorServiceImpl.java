@@ -33,16 +33,6 @@ public class DirectorServiceImpl extends BaseService<Director,
     }
 
     @Transactional
-    @Override
-    public DirectorDtoResponse update(DirectorDtoRequest entity) throws EntityNotFoundException {
-        Director updatedEntity = repository.findById(entity.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Director not found"));
-        mapperRequest.partialUpdate(updatedEntity,entity);
-        Director savedEntity = repository.save(updatedEntity);
-        return mapperResponse.toDto(savedEntity);
-    }
-
-    @Transactional
     public DirectorDtoResponse addFilmToDirector(UUID filmId, UUID directorId) {
         Film film = filmsRepository.findById(filmId)
                 .orElseThrow(() -> new EntityNotFoundException("Film not found"));

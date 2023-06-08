@@ -5,6 +5,8 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Data
 @Entity
@@ -43,6 +45,12 @@ public class User extends BaseEntity {
     @CreatedDate
     @Column(name = "created_when")
     private LocalDate createdWhen;
+
+//    @ManyToMany
+//    @JoinTable(name = "sb_user_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+//    private Collection<Role> roles = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")

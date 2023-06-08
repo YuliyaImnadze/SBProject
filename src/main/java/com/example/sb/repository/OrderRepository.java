@@ -12,5 +12,4 @@ public interface OrderRepository extends CommonRepository<Order> {
     @Query("select o from Order o where o.owner.id = ?1")
     List<Order> findOrdersByUser(UUID id);
 
-
 }

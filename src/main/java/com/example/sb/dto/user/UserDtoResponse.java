@@ -2,6 +2,7 @@ package com.example.sb.dto.user;
 
 
 import com.example.sb.dto.BaseEntityDtoResponse;
+import com.example.sb.dto.role.RoleDtoResponse;
 import lombok.Data;
 import lombok.Value;
 
@@ -19,5 +20,6 @@ public class UserDtoResponse extends BaseEntityDtoResponse implements Serializab
     private String address;
     private String email;
     private LocalDate createdWhen;
+    private RoleDtoResponse role;
 
 }

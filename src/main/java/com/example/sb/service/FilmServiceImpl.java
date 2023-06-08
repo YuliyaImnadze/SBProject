@@ -31,16 +31,6 @@ public class FilmServiceImpl extends BaseService<Film,
         this.directorRepository = directorRepository;
     }
 
-    @Transactional
-    @Override
-    public FilmDtoResponse update(FilmDtoRequest entity) throws EntityNotFoundException {
-        Film updatedEntity = repository.findById(entity.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Film not found"));
-        mapperRequest.partialUpdate(updatedEntity,entity);
-        Film savedEntity = repository.save(updatedEntity);
-        return mapperResponse.toDto(savedEntity);
-    }
-
 
     @Transactional
     public FilmDtoResponse addDirectorToFilm(UUID filmId, UUID directorId) {

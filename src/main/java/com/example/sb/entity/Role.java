@@ -17,8 +17,4 @@ public class Role extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "role", cascade = {CascadeType.REMOVE, CascadeType.DETACH})
-    // при удалении роли объекты Users связанные с этой ролью не будут удалены, данные останутся в базе
-    private List<User> userList;
-
 }

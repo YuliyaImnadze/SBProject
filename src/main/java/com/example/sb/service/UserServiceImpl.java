@@ -10,7 +10,12 @@ import com.example.sb.mapper.user.UserMapperRequest;
 import com.example.sb.mapper.user.UserMapperResponse;
 import com.example.sb.repository.OrderRepository;
 import com.example.sb.repository.UserRepository;
+import com.example.sb.security.CustomPasswordEncoder;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,28 +27,30 @@ import java.util.UUID;
 public class UserServiceImpl extends BaseService<User,
         UserDtoRequest, UserDtoResponse,
         UserRepository,
-        UserMapperRequest, UserMapperResponse> {
+        UserMapperRequest, UserMapperResponse>
+        implements UserDetailsService {
 
     private final OrderRepository orderRepository;
     private final OrderMapperResponse orderMapperResponse;
+    private final CustomPasswordEncoder customPasswordEncoder;
 
     public UserServiceImpl(UserRepository repository,
                            UserMapperRequest mapperRequest, UserMapperResponse mapperResponse,
                            OrderRepository orderRepository,
-                           OrderMapperResponse orderMapperResponse) {
+                           OrderMapperResponse orderMapperResponse,
+                           CustomPasswordEncoder customPasswordEncoder) {
         super(repository, mapperRequest, mapperResponse);
         this.orderRepository = orderRepository;
         this.orderMapperResponse = orderMapperResponse;
+        this.customPasswordEncoder = customPasswordEncoder;
     }
 
-    @Transactional
     @Override
-    public UserDtoResponse update(UserDtoRequest entity)throws EntityNotFoundException {
-        User updatedEntity = repository.findById(entity.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        mapperRequest.partialUpdate(updatedEntity,entity);
-        User savedEntity = repository.save(updatedEntity);
-        return mapperResponse.toDto(savedEntity);
+    public UserDtoResponse save(UserDtoRequest entity) throws DataIntegrityViolationException {
+        String encode = customPasswordEncoder.encode(entity.getPassword());
+        entity.setPassword(encode);
+        User saved = repository.save(mapperRequest.toEntity(entity));
+        return mapperResponse.toDto(saved);
     }
 
 
@@ -56,4 +63,16 @@ public class UserServiceImpl extends BaseService<User,
     }
 
 
+    @Transactional
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repository.findByLogin(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getLogin())
+                .password(user.getPassword())
+                .roles(user.getRole().getTitle())
+                .build();
+    }
 }

@@ -93,7 +93,8 @@ public class FilmController extends BaseController<Film,
             return ResponseEntity.ok(tBaseResponse);
         } catch (EntityNotFoundException | IllegalStateException e) {
             BaseResponse<?> tBaseResponse = new BaseResponse<>(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
-            return ResponseEntity.ok(tBaseResponse);
+            return ResponseEntity.ok(tBaseResponse); // посмотреть почему тут ok
+            // или просто return new BaseResponse<>(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
         }
     }
 

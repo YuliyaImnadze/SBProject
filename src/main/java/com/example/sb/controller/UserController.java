@@ -1,6 +1,7 @@
 package com.example.sb.controller;
 
 import com.example.sb.dto.BaseResponse;
+import com.example.sb.dto.film.FilmDtoResponse;
 import com.example.sb.dto.order.OrderDtoResponse;
 import com.example.sb.dto.user.UserDtoRequest;
 import com.example.sb.dto.user.UserDtoResponse;
@@ -8,9 +9,13 @@ import com.example.sb.entity.User;
 import com.example.sb.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,13 +54,26 @@ public class UserController extends BaseController<User,
     }
 
 
+    // СЮДА сделать, чтобы при создании пароль шифровался
     @Operation(
             summary = "Создание нового пользователя",
             description = "Позволяет создать нового пользователя"
     )
+//    @PostMapping("/create")
+//    @Override
+//    public ResponseEntity<BaseResponse<?>> create(@RequestBody UserDtoRequest entity) { return super.create(entity);
+//    }
     @PostMapping("/create")
     @Override
-    public ResponseEntity<BaseResponse<?>> create(@RequestBody UserDtoRequest entity) { return super.create(entity);
+    public ResponseEntity<BaseResponse<?>> create(@RequestBody UserDtoRequest entity) {
+        try {
+            UserDtoResponse userDtoResponse = userServiceImpl.save(entity);
+            BaseResponse<UserDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, userDtoResponse, LocalDateTime.now());
+            return ResponseEntity.ok(tBaseResponse);
+        } catch (DataIntegrityViolationException e) {
+            BaseResponse<?> tBaseResponse = new BaseResponse<>(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
+            return ResponseEntity.ok(tBaseResponse);
+        }
     }
 
 
@@ -81,6 +99,8 @@ public class UserController extends BaseController<User,
     }
 
 
+
+    // СЮДА добавить JWT
     @Operation(
             summary = "Список всех арендованных/купленных фильмов у пользователя",
             description = "Позволяет посмотерть писок всех арендованных/купленных фильмов у пользователя"

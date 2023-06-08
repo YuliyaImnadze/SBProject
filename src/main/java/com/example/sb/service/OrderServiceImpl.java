@@ -36,15 +36,6 @@ public class OrderServiceImpl extends BaseService<Order,
         this.filmsRepository = filmsRepository;
     }
 
-    @Transactional
-    @Override
-    public OrderDtoResponse update(OrderDtoRequest entity) throws EntityNotFoundException {
-        Order updatedEntity = repository.findById(entity.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Order not found"));
-        mapperRequest.partialUpdate(updatedEntity,entity);
-        Order savedEntity = repository.save(updatedEntity);
-        return mapperResponse.toDto(savedEntity);
-    }
 
     @Transactional
     public OrderDtoResponse rentOrBuyFilm(List<UUID> filmsId, UUID userId, OrderDtoRequest orderDto) throws EntityNotFoundException  {

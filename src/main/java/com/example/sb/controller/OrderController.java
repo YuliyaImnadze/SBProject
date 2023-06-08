@@ -8,6 +8,7 @@ import com.example.sb.entity.Order;
 import com.example.sb.service.OrderServiceImpl;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -67,6 +68,7 @@ public class OrderController extends BaseController<Order,
             summary = "Обновление заказа",
             description = "Позволяет обновить данные в заказе"
     )
+//    @SecurityRequirement(name = "JWT") - как делать
     @PutMapping("/update")
     @Override
     public ResponseEntity<BaseResponse<?>> update(@RequestBody OrderDtoRequest entity) {
@@ -74,11 +76,10 @@ public class OrderController extends BaseController<Order,
     }
 
 
-    //    @Operation(
-//            summary = "Удаление заказа",
-//            description = "Позволяет удалить заказ"
-//    )
-    @Hidden
+        @Operation(
+            summary = "Удаление заказа",
+            description = "Позволяет удалить заказ"
+    )
     @DeleteMapping("/delete")
     @Override
     public ResponseEntity<String> delete(@RequestBody OrderDtoRequest entity) {
