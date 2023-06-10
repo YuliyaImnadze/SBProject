@@ -1,6 +1,6 @@
 package com.example.sb.dto.film;
 
-import com.example.sb.dto.BaseEntityDtoRequest;
+import com.example.sb.dto.base.BaseEntityDtoRequest;
 import lombok.Data;
 
 import java.io.Serializable;

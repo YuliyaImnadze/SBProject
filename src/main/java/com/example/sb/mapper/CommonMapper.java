@@ -1,12 +1,14 @@
 package com.example.sb.mapper;
 
-import com.example.sb.dto.BaseEntityDtoRequest;
-import com.example.sb.dto.BaseEntityDtoResponse;
+import com.example.sb.dto.base.BaseEntityDtoRequest;
+import com.example.sb.dto.base.BaseEntityDtoResponse;
 import com.example.sb.entity.BaseEntity;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+
+import java.util.List;
 
 
 public interface CommonMapper<E extends BaseEntity,
@@ -17,6 +19,8 @@ public interface CommonMapper<E extends BaseEntity,
 
     D toDtoRequest(E entity);
     T toDtoResponse(E entity);
+
+    List<T> toDtoResponse(List<E> entityList);
 
     @Named("partialUpdate")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

@@ -1,6 +1,6 @@
 package com.example.sb.dto.director;
 
-import com.example.sb.dto.BaseEntityDtoRequest;
+import com.example.sb.dto.base.BaseEntityDtoRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

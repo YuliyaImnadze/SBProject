@@ -1,6 +1,6 @@
 package com.example.sb.dto.order;
 
-import com.example.sb.dto.BaseEntityDtoResponse;
+import com.example.sb.dto.base.BaseEntityDtoResponse;
 import com.example.sb.dto.film.FilmDtoResponse;
 import com.example.sb.dto.user.UserDtoResponse;
 import lombok.Data;

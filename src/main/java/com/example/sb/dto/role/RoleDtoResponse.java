@@ -1,8 +1,7 @@
 package com.example.sb.dto.role;
 
-import com.example.sb.dto.BaseEntityDtoResponse;
+import com.example.sb.dto.base.BaseEntityDtoResponse;
 import lombok.Data;
-import lombok.Value;
 
 import java.io.Serializable;
 

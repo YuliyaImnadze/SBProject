@@ -13,10 +13,10 @@ import java.util.Collection;
 @Table(name = "sb_user")
 public class User extends BaseEntity {
 
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", unique = true)
     private String password;
 
     @Column(name = "first_name")
@@ -46,11 +46,6 @@ public class User extends BaseEntity {
     @Column(name = "created_when")
     private LocalDate createdWhen;
 
-//    @ManyToMany
-//    @JoinTable(name = "sb_user_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "roles_id"))
-//    private Collection<Role> roles = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")

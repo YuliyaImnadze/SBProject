@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,6 +31,6 @@ public class Order extends BaseEntity {
     @JsonIgnore
     @OneToMany
     @JoinColumn(name = "order_id")
-    private List<Film> filmList;
+    private List<Film> filmList = new ArrayList<>();
 
 }

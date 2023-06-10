@@ -1,10 +1,9 @@
 package com.example.sb.dto.user;
 
 
-import com.example.sb.dto.BaseEntityDtoResponse;
+import com.example.sb.dto.base.BaseEntityDtoResponse;
 import com.example.sb.dto.role.RoleDtoResponse;
 import lombok.Data;
-import lombok.Value;
 
 import java.io.Serializable;
 import java.time.LocalDate;
