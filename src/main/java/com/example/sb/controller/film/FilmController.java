@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface FilmController {
 
     @PutMapping("/add_director/")
-    public ResponseEntity<BaseResponse<?>> addDirector(@RequestParam("directorId") UUID directorID,
-                                                       @RequestParam("filmId") UUID filmId);
+    ResponseEntity<BaseResponse<?>> addDirector(@RequestParam("directorId") UUID directorID,
+                                                @RequestParam("filmId") UUID filmId);
 
 }

@@ -1,4 +1,4 @@
-package com.example.sb.config;
+package com.example.sb.config.swagger;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

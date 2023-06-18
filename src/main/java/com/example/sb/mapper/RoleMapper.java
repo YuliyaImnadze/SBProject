@@ -3,7 +3,6 @@ package com.example.sb.mapper;
 import com.example.sb.dto.role.RoleDtoRequest;
 import com.example.sb.dto.role.RoleDtoResponse;
 import com.example.sb.entity.Role;
-import com.example.sb.mapper.CommonMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

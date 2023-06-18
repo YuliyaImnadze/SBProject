@@ -1,16 +1,14 @@
 package com.example.sb.controller.director;
 
 import com.example.sb.controller.common.BaseController;
-import com.example.sb.controller.director.DirectorController;
 import com.example.sb.dto.BaseResponse;
 import com.example.sb.dto.director.DirectorDtoRequest;
 import com.example.sb.dto.director.DirectorDtoResponse;
 import com.example.sb.entity.Director;
-import com.example.sb.service.director.DirectorServiceImpl;
+import com.example.sb.service.director.DirectorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +21,11 @@ import java.util.UUID;
 @Tag(name = "Режиссеры", description = "Позволяет осуществять основные действия с режиссерами")
 public class DirectorControllerImpl extends BaseController<Director,
         DirectorDtoRequest, DirectorDtoResponse,
-        DirectorServiceImpl>
+        DirectorService>
         implements DirectorController {
 
-    private final DirectorServiceImpl directorServiceImpl;
-
-    protected DirectorControllerImpl(DirectorServiceImpl service, DirectorServiceImpl directorServiceImpl) {
+    protected DirectorControllerImpl(DirectorService service) {
         super(service);
-        this.directorServiceImpl = directorServiceImpl;
     }
 
     @Operation(
@@ -47,7 +42,7 @@ public class DirectorControllerImpl extends BaseController<Director,
             description = "Позволяет посмотреть данные конкретного режиссера"
     )
     @Override
-    public ResponseEntity<BaseResponse<?>> showById(@RequestParam("id") @Parameter(description = "Идентификатор пользователя") UUID id) {
+    public ResponseEntity<BaseResponse<DirectorDtoResponse>> showById(@RequestParam("id") @Parameter(description = "Идентификатор пользователя") UUID id) {
         return super.showById(id);
     }
 
@@ -56,7 +51,7 @@ public class DirectorControllerImpl extends BaseController<Director,
             description = "Позволяет добавить нового режиссера"
     )
     @Override
-    public ResponseEntity<BaseResponse<?>> create(@RequestBody DirectorDtoRequest entity) {
+    public ResponseEntity<BaseResponse<DirectorDtoResponse>> create(@RequestBody DirectorDtoRequest entity) {
         return super.create(entity);
     }
 
@@ -65,7 +60,7 @@ public class DirectorControllerImpl extends BaseController<Director,
             description = "Позволяет обновить данные о режиссере"
     )
     @Override
-    public ResponseEntity<BaseResponse<?>> update(@RequestBody DirectorDtoRequest entity) {
+    public ResponseEntity<BaseResponse<DirectorDtoResponse>> update(@RequestBody DirectorDtoRequest entity) {
         return super.update(entity);
     }
 
@@ -86,14 +81,9 @@ public class DirectorControllerImpl extends BaseController<Director,
     @Override
     public ResponseEntity<BaseResponse<?>> addFilm(@RequestParam("directorId") UUID directorID,
                                                    @RequestParam("filmId") UUID filmId) {
-        try {
-            DirectorDtoResponse directorDtoResponse = directorServiceImpl.addFilmToDirector(filmId, directorID);
+            DirectorDtoResponse directorDtoResponse = service.addFilmToDirector(filmId, directorID);
             BaseResponse<DirectorDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, directorDtoResponse, LocalDateTime.now());
             return ResponseEntity.ok(tBaseResponse);
-        } catch (EntityNotFoundException | IllegalStateException e) {
-            BaseResponse<?> tBaseResponse = new BaseResponse<>(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
-            return ResponseEntity.ok(tBaseResponse);
-        }
     }
 
 

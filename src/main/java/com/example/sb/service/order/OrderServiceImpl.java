@@ -10,7 +10,6 @@ import com.example.sb.repository.FilmsRepository;
 import com.example.sb.repository.OrderRepository;
 import com.example.sb.repository.UserRepository;
 import com.example.sb.service.common.BaseService;
-import com.example.sb.service.order.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +23,6 @@ public class OrderServiceImpl extends BaseService<Order,
         OrderRepository,
         OrderMapper>
         implements OrderService {
-
 
     private final UserRepository userRepository;
     private final FilmsRepository filmsRepository;

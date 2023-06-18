@@ -16,8 +16,8 @@ import java.util.UUID;
 public interface OrderController {
 
     @PostMapping("/create/")
-    public ResponseEntity<BaseResponse<?>> rentOrBuyFilm(@RequestParam("filmID") List<UUID> filmsID,
-                                                         @RequestParam("userId") UUID userId,
-                                                         @RequestBody OrderDtoRequest order);
+    ResponseEntity<BaseResponse<?>> rentOrBuyFilm(@RequestParam("filmID") List<UUID> filmsID,
+                                                  @RequestParam("userId") UUID userId,
+                                                  @RequestBody OrderDtoRequest order);
 
 }

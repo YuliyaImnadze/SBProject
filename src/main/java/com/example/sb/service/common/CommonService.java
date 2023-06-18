@@ -4,8 +4,6 @@ package com.example.sb.service.common;
 import com.example.sb.dto.base.BaseEntityDtoRequest;
 import com.example.sb.dto.base.BaseEntityDtoResponse;
 import com.example.sb.entity.BaseEntity;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,13 +13,13 @@ public interface CommonService<E extends BaseEntity,
 
     List<T> findAll();
 
-    T findById(UUID id) throws EntityNotFoundException;
+    T findById(UUID id);
 
-    T save(D entity) throws DataIntegrityViolationException;
+    T save(D entity);
 
-    T update(D entity) throws EntityNotFoundException;
+    T update(D entity);
 
-    void delete(D entity); // здесь нужна ошибка? какая? общая?
+    void delete(D entity);
 
 
 }

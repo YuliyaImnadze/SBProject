@@ -3,7 +3,6 @@ package com.example.sb.mapper;
 import com.example.sb.dto.user.UserDtoRequest;
 import com.example.sb.dto.user.UserDtoResponse;
 import com.example.sb.entity.User;
-import com.example.sb.mapper.CommonMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

@@ -26,7 +26,6 @@ public class WebSecurityConfig {
 
     private final CustomPasswordEncoder customPasswordEncoder;
     private final UserServiceImpl userService;
-
     private final JwtRequestFilter filter;
 
     public WebSecurityConfig(CustomPasswordEncoder customPasswordEncoder, UserServiceImpl userService, JwtRequestFilter filter) {
@@ -43,11 +42,11 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/users/orders/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                         .anyRequest().permitAll())
-                .httpBasic(Customizer.withDefaults()) // как понять какие настройки дефолтные?
+                .httpBasic(Customizer.withDefaults())
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())
                 .exceptionHandling((exceptions) -> exceptions
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))  // создать свой вывод ошибки
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

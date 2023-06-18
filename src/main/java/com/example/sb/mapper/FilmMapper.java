@@ -4,7 +4,6 @@ import com.example.sb.dto.film.FilmDtoRequest;
 import com.example.sb.dto.film.FilmDtoResponse;
 import com.example.sb.entity.Director;
 import com.example.sb.entity.Film;
-import com.example.sb.mapper.CommonMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

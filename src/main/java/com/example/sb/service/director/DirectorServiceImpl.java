@@ -9,7 +9,6 @@ import com.example.sb.mapper.DirectorMapper;
 import com.example.sb.repository.DirectorRepository;
 import com.example.sb.repository.FilmsRepository;
 import com.example.sb.service.common.BaseService;
-import com.example.sb.service.director.DirectorService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

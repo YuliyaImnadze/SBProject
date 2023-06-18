@@ -1,25 +1,33 @@
 package com.example.sb.controller.token;
 
+import com.example.sb.dto.BaseResponse;
 import com.example.sb.dto.token.JwtRequest;
-import com.example.sb.service.token.TokenServiceImpl;
+import com.example.sb.dto.token.JwtResponse;
+import com.example.sb.service.token.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @RestController
 public class TokenControllerImpl implements TokenController {
 
-    private final TokenServiceImpl tokenService;
+    private final TokenService tokenService;
 
     @Autowired
-    public TokenControllerImpl(TokenServiceImpl tokenService) {
+    public TokenControllerImpl(TokenService tokenService) {
         this.tokenService = tokenService;
     }
 
     @Override
-    public ResponseEntity<?> createToken(@RequestBody JwtRequest jwtRequest) {
-        return tokenService.createToken(jwtRequest);
+    public ResponseEntity<BaseResponse<JwtResponse>> createToken(@RequestBody JwtRequest jwtRequest) {
+        JwtResponse token = tokenService.createToken(jwtRequest);
+        BaseResponse<JwtResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, token, LocalDateTime.now());
+        return ResponseEntity.ok(tBaseResponse);
     }
+
 
 }

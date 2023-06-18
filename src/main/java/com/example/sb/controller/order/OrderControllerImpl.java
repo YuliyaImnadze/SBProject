@@ -1,15 +1,13 @@
 package com.example.sb.controller.order;
 
 import com.example.sb.controller.common.BaseController;
-import com.example.sb.controller.order.OrderController;
 import com.example.sb.dto.BaseResponse;
 import com.example.sb.dto.order.OrderDtoRequest;
 import com.example.sb.dto.order.OrderDtoResponse;
 import com.example.sb.entity.Order;
-import com.example.sb.service.order.OrderServiceImpl;
+import com.example.sb.service.order.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +19,11 @@ import java.util.UUID;
 @RestController
 @Tag(name = "Заказы", description = "Позволяет осуществять основные действия с заказами")
 public class OrderControllerImpl extends BaseController<Order,
-        OrderDtoRequest, OrderDtoResponse, OrderServiceImpl>
+        OrderDtoRequest, OrderDtoResponse, OrderService>
         implements OrderController {
 
-    private final OrderServiceImpl orderServiceImpl;
-
-    protected OrderControllerImpl(OrderServiceImpl service, OrderServiceImpl orderServiceImpl) {
+    protected OrderControllerImpl(OrderService service) {
         super(service);
-        this.orderServiceImpl = orderServiceImpl;
     }
 
     @Operation(
@@ -45,7 +40,7 @@ public class OrderControllerImpl extends BaseController<Order,
             description = "Позволяет посмотреть данные конкретного заказа"
     )
     @Override
-    public ResponseEntity<BaseResponse<?>> showById(@RequestParam("id") UUID id) { // подумать над id
+    public ResponseEntity<BaseResponse<OrderDtoResponse>> showById(@RequestParam("id") UUID id) { // подумать над id
         return super.showById(id);
     }
 
@@ -55,7 +50,7 @@ public class OrderControllerImpl extends BaseController<Order,
             description = "Позволяет создать новый заказ только через json"
     )
     @Override
-    public ResponseEntity<BaseResponse<?>> create(@RequestBody OrderDtoRequest entity) {
+    public ResponseEntity<BaseResponse<OrderDtoResponse>> create(@RequestBody OrderDtoRequest entity) {
         return super.create(entity);
     }
 
@@ -65,7 +60,7 @@ public class OrderControllerImpl extends BaseController<Order,
             description = "Позволяет обновить данные в заказе"
     )
     @Override
-    public ResponseEntity<BaseResponse<?>> update(@RequestBody OrderDtoRequest entity) {
+    public ResponseEntity<BaseResponse<OrderDtoResponse>> update(@RequestBody OrderDtoRequest entity) {
         return super.update(entity);
     }
 
@@ -88,14 +83,9 @@ public class OrderControllerImpl extends BaseController<Order,
     public ResponseEntity<BaseResponse<?>> rentOrBuyFilm(@RequestParam("filmID") List<UUID> filmsID,
                                                          @RequestParam("userId") UUID userId,
                                                          @RequestBody OrderDtoRequest order) {
-        try {
-            OrderDtoResponse orderDtoResponse = orderServiceImpl.rentOrBuyFilm(filmsID, userId, order);
+            OrderDtoResponse orderDtoResponse = service.rentOrBuyFilm(filmsID, userId, order);
             BaseResponse<OrderDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, orderDtoResponse, LocalDateTime.now());
             return ResponseEntity.ok(tBaseResponse);
-        } catch (EntityNotFoundException e) {
-            BaseResponse<?> tBaseResponse = new BaseResponse<>(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
-            return ResponseEntity.ok(tBaseResponse);
-        }
     }
 
 

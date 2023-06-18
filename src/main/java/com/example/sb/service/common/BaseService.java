@@ -7,7 +7,6 @@ import com.example.sb.entity.BaseEntity;
 import com.example.sb.mapper.CommonMapper;
 import com.example.sb.repository.CommonRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -38,7 +37,7 @@ public abstract class BaseService<E extends BaseEntity,
     }
 
     @Override
-    public T findById(UUID id) throws EntityNotFoundException {
+    public T findById(UUID id)  {
         E baseEntityById = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Entity not found"));
         return mapper.toDtoResponse(baseEntityById);
@@ -46,14 +45,14 @@ public abstract class BaseService<E extends BaseEntity,
 
     @Transactional
     @Override
-    public T save(D entity) throws DataIntegrityViolationException {
+    public T save(D entity)  {
         E savedEntity = repository.save(mapper.toEntityRequest(entity));
         return mapper.toDtoResponse(savedEntity);
     }
 
     @Transactional
     @Override
-    public T update(D entity) throws EntityNotFoundException {
+    public T update(D entity) {
         E updatedEntity = repository.findById(entity.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Entity not found"));
         mapper.partialUpdateRequest(updatedEntity,entity);

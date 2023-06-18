@@ -1,16 +1,15 @@
 package com.example.sb.controller.user;
 
 import com.example.sb.controller.common.BaseController;
-import com.example.sb.controller.user.UserController;
 import com.example.sb.dto.BaseResponse;
 import com.example.sb.dto.order.OrderDtoResponse;
 import com.example.sb.dto.user.UserDtoRequest;
 import com.example.sb.dto.user.UserDtoResponse;
 import com.example.sb.entity.User;
-import com.example.sb.service.user.UserServiceImpl;
+import com.example.sb.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.dao.DataIntegrityViolationException;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +21,11 @@ import java.util.UUID;
 @RestController
 @Tag(name = "Пользователи", description = "Позволяет осуществять основные действия с пользователями")
 public class UserControllerImpl extends BaseController<User,
-        UserDtoRequest, UserDtoResponse, UserServiceImpl>
+        UserDtoRequest, UserDtoResponse, UserService>
         implements UserController {
 
-    private final UserServiceImpl userServiceImpl;
-
-    protected UserControllerImpl(UserServiceImpl service, UserServiceImpl userServiceImpl) {
+    protected UserControllerImpl(UserService service) {
         super(service);
-        this.userServiceImpl = userServiceImpl;
     }
 
     @Operation(
@@ -47,7 +43,7 @@ public class UserControllerImpl extends BaseController<User,
             description = "Позволяет посмотреть данные конкретного пользователя"
     )
     @Override
-    public ResponseEntity<BaseResponse<?>> showById(@RequestParam("id") UUID id) { // подумать над id
+    public ResponseEntity<BaseResponse<UserDtoResponse>> showById(@RequestParam("id") UUID id) { // подумать над id
         return super.showById(id);
     }
 
@@ -57,15 +53,10 @@ public class UserControllerImpl extends BaseController<User,
             description = "Позволяет создать нового пользователя"
     )
     @Override
-    public ResponseEntity<BaseResponse<?>> create(@RequestBody UserDtoRequest entity) {
-        try {
-            UserDtoResponse userDtoResponse = userServiceImpl.save(entity);
+    public ResponseEntity<BaseResponse<UserDtoResponse>> create(@RequestBody @Valid UserDtoRequest entity) {
+            UserDtoResponse userDtoResponse = service.save(entity);
             BaseResponse<UserDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, userDtoResponse, LocalDateTime.now());
             return ResponseEntity.ok(tBaseResponse);
-        } catch (DataIntegrityViolationException e) {
-            BaseResponse<?> tBaseResponse = new BaseResponse<>(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
-            return ResponseEntity.ok(tBaseResponse);
-        }
     }
 
 
@@ -74,7 +65,7 @@ public class UserControllerImpl extends BaseController<User,
             description = "Позволяет обновить данные о пользователе"
     )
     @Override
-    public ResponseEntity<BaseResponse<?>> update(@RequestBody UserDtoRequest entity) {
+    public ResponseEntity<BaseResponse<UserDtoResponse>> update(@RequestBody UserDtoRequest entity) {
         return super.update(entity);
     }
 
@@ -95,7 +86,7 @@ public class UserControllerImpl extends BaseController<User,
     )
     @Override
     public ResponseEntity<List<OrderDtoResponse>> allUserOrders(@RequestParam("id") UUID userId) {
-        List<OrderDtoResponse> orderDtoResponses = userServiceImpl.allOrders(userId);
+        List<OrderDtoResponse> orderDtoResponses = service.allOrders(userId);
         return ResponseEntity.ok(orderDtoResponses);
     }
 

@@ -17,4 +17,6 @@ public class DirectorDtoRequest extends BaseEntityDtoRequest implements Serializ
     private String directorsFio;
     private String position;
 
+
+
 }

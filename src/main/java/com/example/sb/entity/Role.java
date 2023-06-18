@@ -2,11 +2,10 @@ package com.example.sb.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
 
-import java.util.List;
+import java.util.Objects;
 
-@Data
+
 @Entity
 @Table(name = "sb_role")
 public class Role extends BaseEntity {
@@ -17,4 +16,41 @@ public class Role extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Role role = (Role) o;
+        return Objects.equals(title, role.title) && Objects.equals(description, role.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, description);
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

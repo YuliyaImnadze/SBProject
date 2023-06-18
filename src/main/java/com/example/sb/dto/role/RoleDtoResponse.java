@@ -13,6 +13,6 @@ public class RoleDtoResponse  extends BaseEntityDtoResponse implements Serializa
 
     private String title;
     private String description;
-//    List<UserDtoResponse> userList;
+
 
 }

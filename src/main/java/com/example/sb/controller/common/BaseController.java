@@ -7,8 +7,7 @@ import com.example.sb.dto.BaseResponse;
 import com.example.sb.entity.BaseEntity;
 import com.example.sb.service.common.CommonService;
 import io.swagger.v3.oas.annotations.Hidden;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.dao.DataIntegrityViolationException;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +23,7 @@ public abstract class BaseController<E extends BaseEntity,
         S extends CommonService<E, D, T>>
         implements CommonController<D, T> {
 
-    private final S service;
+    protected final S service;
 
     protected BaseController(S service) {
         this.service = service;
@@ -37,41 +36,25 @@ public abstract class BaseController<E extends BaseEntity,
     }
 
     @Override
-    public ResponseEntity<BaseResponse<?>> showById(@RequestParam UUID id) {
-        try {
+    public ResponseEntity<BaseResponse<T>> showById(@RequestParam UUID id) {
             T byId = service.findById(id);
             BaseResponse<T> tBaseResponse = new BaseResponse<>(HttpStatus.OK, byId, LocalDateTime.now());
             return ResponseEntity.ok(tBaseResponse);
-        } catch (EntityNotFoundException e) {
-            BaseResponse<?> tBaseResponse = new BaseResponse<>(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
-            return ResponseEntity.ok(tBaseResponse);
-        }
     }
 
     @Override
-    public ResponseEntity<BaseResponse<?>> create(@RequestBody D entity) {
-        try {
+    public ResponseEntity<BaseResponse<T>> create(@RequestBody @Valid D entity) {
             T saved = service.save(entity);
             BaseResponse<T> tBaseResponse = new BaseResponse<>(HttpStatus.OK, saved, LocalDateTime.now());
             return ResponseEntity.ok(tBaseResponse);
-        } catch (DataIntegrityViolationException e) {
-            BaseResponse<?> tBaseResponse = new BaseResponse<>(HttpStatus.CONFLICT, e.getMessage(), LocalDateTime.now());
-            return ResponseEntity.ok(tBaseResponse);
-        }
     }
 
 
     @Override
-    public ResponseEntity<BaseResponse<?>> update(D entity) {
-        try {
+    public ResponseEntity<BaseResponse<T>> update(D entity) {
             T updated = service.update(entity);
             BaseResponse<T> tBaseResponse = new BaseResponse<>(HttpStatus.OK, updated, LocalDateTime.now());
             return ResponseEntity.ok(tBaseResponse);
-        } catch (EntityNotFoundException e) {
-            BaseResponse<?> tBaseResponse = new BaseResponse<>(HttpStatus.BAD_REQUEST, e.getMessage(), LocalDateTime.now());
-            return ResponseEntity.ok(tBaseResponse);
-        }
-
     }
 
     @Hidden
