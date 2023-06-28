@@ -6,14 +6,13 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
 
 /**
  * DTO for {@link com.example.sb.entity.Film}
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class FilmDtoRequest extends BaseEntityDtoRequest implements Serializable {
+public class FilmDtoRequest extends BaseEntityDtoRequest {
 
     @NotBlank(message = "The title field should not be empty")
     private String title;

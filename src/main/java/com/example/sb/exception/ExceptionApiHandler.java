@@ -31,7 +31,7 @@ public class ExceptionApiHandler extends ResponseEntityExceptionHandler {
             listErrors.add(defaultMessage);
         }
 
-        BaseResponse response = new BaseResponse( (HttpStatus) status, listErrors);
+        BaseResponse<?> response = new BaseResponse<>( (HttpStatus) status, listErrors);
         return new ResponseEntity<>(response, status);
     }
 

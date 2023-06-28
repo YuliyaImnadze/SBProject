@@ -7,12 +7,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class OrderDtoResponse  extends BaseEntityDtoResponse implements Serializable {
 
+    private LocalDate rentDate;
     private int rentPeriod;
     private boolean purchase;
     private UserDtoResponse owner;

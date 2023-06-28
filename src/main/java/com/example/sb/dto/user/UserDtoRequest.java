@@ -10,7 +10,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -18,7 +17,7 @@ import java.time.LocalDate;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserDtoRequest  extends BaseEntityDtoRequest implements Serializable {
+public class UserDtoRequest extends BaseEntityDtoRequest {
 
     @Size(min = 2, max = 20, message = "The length of the login must be in the range from 2 to 20 characters")
     private String login;
