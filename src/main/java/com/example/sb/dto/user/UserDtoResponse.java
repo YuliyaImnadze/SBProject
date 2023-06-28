@@ -4,10 +4,12 @@ package com.example.sb.dto.user;
 import com.example.sb.dto.base.BaseEntityDtoResponse;
 import com.example.sb.dto.role.RoleDtoResponse;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class UserDtoResponse extends BaseEntityDtoResponse implements Serializable {
 

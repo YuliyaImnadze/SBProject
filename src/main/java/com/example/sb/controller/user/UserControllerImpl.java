@@ -12,9 +12,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,7 +55,7 @@ public class UserControllerImpl extends BaseController<User,
     @Override
     public ResponseEntity<BaseResponse<UserDtoResponse>> create(@RequestBody @Valid UserDtoRequest entity) {
             UserDtoResponse userDtoResponse = service.save(entity);
-            BaseResponse<UserDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, userDtoResponse, LocalDateTime.now());
+            BaseResponse<UserDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, userDtoResponse);
             return ResponseEntity.ok(tBaseResponse);
     }
 
@@ -65,7 +65,7 @@ public class UserControllerImpl extends BaseController<User,
             description = "Позволяет обновить данные о пользователе"
     )
     @Override
-    public ResponseEntity<BaseResponse<UserDtoResponse>> update(@RequestBody UserDtoRequest entity) {
+    public ResponseEntity<BaseResponse<UserDtoResponse>> update(@RequestBody @Valid UserDtoRequest entity) {
         return super.update(entity);
     }
 

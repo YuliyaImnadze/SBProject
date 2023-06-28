@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -80,7 +79,7 @@ public class FilmControllerImpl extends BaseController<Film,
     public ResponseEntity<BaseResponse<?>> addDirector(@RequestParam("directorId") UUID directorID,
                                                        @RequestParam("filmId") UUID filmId) {
             FilmDtoResponse filmDtoResponse = service.addDirectorToFilm(filmId, directorID);
-            BaseResponse<FilmDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, filmDtoResponse, LocalDateTime.now());
+            BaseResponse<FilmDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, filmDtoResponse);
             return ResponseEntity.ok(tBaseResponse);
     }
 

@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 
-@Entity
+@Entity(name = "SB_ROLE")
 @Table(name = "sb_role")
 public class Role extends BaseEntity {
 

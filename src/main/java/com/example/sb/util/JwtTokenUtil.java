@@ -20,11 +20,9 @@ public class JwtTokenUtil {
     @Value("${jwt.lifetime}")
     private Duration jwtLifeTime;
 
-
     public String generateToken(UserDetails userDetails) {
         Date issuedDate = new Date();
         Date expirationDate = new Date(issuedDate.getTime() + jwtLifeTime.toMillis());
-//        Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(jwtLifeTime.toMillis()).toInstant()); // действует больше 30 минут
         Map<String, Object> claims = new HashMap<>();
         List<String> roles = userDetails.getAuthorities()
                 .stream()

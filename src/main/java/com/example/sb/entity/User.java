@@ -2,32 +2,41 @@ package com.example.sb.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 
 
-@Entity
+@Entity(name = "SB_USER")
 @Table(name = "sb_user")
 public class User extends BaseEntity {
 
     @Column(name = "login", unique = true)
+    @Size(min = 2, max = 20, message = "The length of the login must be in the range from 2 to 20 characters")
     private String login;
 
+    @Size(min = 3, max = 20, message = "The length of the login must be in the range from 3 to 20 characters")
     @Column(name = "password", unique = true)
     private String password;
 
     @Column(name = "first_name")
+    @Size(min = 2, max = 20, message = "The length of the firstName must be in the range from 2 to 20 characters")
     private String firstName;
 
     @Column(name = "last_name")
+    @Size(min = 2, max = 20, message = "The length of the lastName must be in the range from 2 to 20 characters")
     private String lastName;
 
     @Column(name = "middle_name")
+    @Size(min = 2, max = 20, message = "The length of the middleName must be in the range from 2 to 20 characters")
     private String middleName;
 
     @Column(name = "birth_date")
+    @Past(message = "Birth date must be in the past")
     private LocalDate birthDate;
 
     @Column(name = "phone")
@@ -44,7 +53,6 @@ public class User extends BaseEntity {
 //    @CreatedDate
     @Column(name = "created_when")
     private LocalDate createdWhen;
-
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")

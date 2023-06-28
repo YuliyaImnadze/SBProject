@@ -1,15 +1,16 @@
 package com.example.sb.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "SB_ORDER")
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "sb_order")
 public class Order extends BaseEntity {
 
@@ -27,7 +28,6 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User owner;
 
-    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "order_id")
     private List<Film> filmList = new ArrayList<>();

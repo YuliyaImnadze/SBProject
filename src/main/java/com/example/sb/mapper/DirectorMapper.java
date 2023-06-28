@@ -21,7 +21,9 @@ public interface DirectorMapper extends CommonMapper<Director, DirectorDtoReques
     DirectorDtoResponse toDtoResponse(Director entity);
 
     default List<UUID> toFilmIds(List<Film> films) {
-        return films.stream().map(Film::getId).collect(Collectors.toList());
+        return films.stream()
+                .map(Film::getId)
+                .collect(Collectors.toList());
     }
 
 }

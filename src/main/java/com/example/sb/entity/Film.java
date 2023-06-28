@@ -1,19 +1,23 @@
 package com.example.sb.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "SB_FILM")
 @Table(name = "sb_film")
 public class Film extends BaseEntity {
 
     @Column(nullable = false)
+    @NotBlank(message = "The title field should not be empty")
     private String title;
 
     @Column(name = "premier_year")
+    @Min(value = 1900)
     private int premierYear;
 
     @Column(name = "country")
@@ -22,7 +26,6 @@ public class Film extends BaseEntity {
     @Column(name = "genre")
     private String genre;
 
-//    @JsonIgnoreProperties("filmList")
     @ManyToMany(mappedBy = "filmList")
     private List<Director> directorList = new ArrayList<>();
 

@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,7 +41,8 @@ public class DirectorControllerImpl extends BaseController<Director,
             description = "Позволяет посмотреть данные конкретного режиссера"
     )
     @Override
-    public ResponseEntity<BaseResponse<DirectorDtoResponse>> showById(@RequestParam("id") @Parameter(description = "Идентификатор пользователя") UUID id) {
+    public ResponseEntity<BaseResponse<DirectorDtoResponse>> showById(
+            @RequestParam("id") @Parameter(description = "Идентификатор пользователя") UUID id) {
         return super.showById(id);
     }
 
@@ -82,7 +82,7 @@ public class DirectorControllerImpl extends BaseController<Director,
     public ResponseEntity<BaseResponse<?>> addFilm(@RequestParam("directorId") UUID directorID,
                                                    @RequestParam("filmId") UUID filmId) {
             DirectorDtoResponse directorDtoResponse = service.addFilmToDirector(filmId, directorID);
-            BaseResponse<DirectorDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, directorDtoResponse, LocalDateTime.now());
+            BaseResponse<DirectorDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, directorDtoResponse);
             return ResponseEntity.ok(tBaseResponse);
     }
 

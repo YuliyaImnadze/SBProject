@@ -1,21 +1,23 @@
 package com.example.sb.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "SB_DIRECTOR")
 @Table(name = "sb_director")
 public class Director extends BaseEntity {
 
     @Column(name = "director_fio")
+    @Size(min = 5, max = 200, message = "The length of the directors FIO must be in the range from 5 to 200 characters")
     private String directorsFio;
 
     @Column(name = "position")
     private String position;
 
-    //    @JsonIgnoreProperties("directorList") - использовала, чтобы исключить рекурсию при выводе без ДТО
     @ManyToMany
     @JoinTable(name = "film_director",
             joinColumns = @JoinColumn(name = "director_id"),

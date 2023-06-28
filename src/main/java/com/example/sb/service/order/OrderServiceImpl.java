@@ -39,7 +39,8 @@ public class OrderServiceImpl extends BaseService<Order,
 
     @Transactional
     @Override
-    public OrderDtoResponse rentOrBuyFilm(List<UUID> filmsId, UUID userId, OrderDtoRequest orderDto) throws EntityNotFoundException {
+    public OrderDtoResponse rentOrBuyFilm(List<UUID> filmsId, UUID userId, OrderDtoRequest orderDto)
+            throws EntityNotFoundException {
         Order order = mapper.toEntityRequest(orderDto);
         order.setFilmList(order.getFilmList());
         for (UUID filmId : filmsId) {

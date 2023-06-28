@@ -10,13 +10,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@Validated
 @Tag(name = "Заказы", description = "Позволяет осуществять основные действия с заказами")
 public class OrderControllerImpl extends BaseController<Order,
         OrderDtoRequest, OrderDtoResponse, OrderService>
@@ -40,7 +41,7 @@ public class OrderControllerImpl extends BaseController<Order,
             description = "Позволяет посмотреть данные конкретного заказа"
     )
     @Override
-    public ResponseEntity<BaseResponse<OrderDtoResponse>> showById(@RequestParam("id") UUID id) { // подумать над id
+    public ResponseEntity<BaseResponse<OrderDtoResponse>> showById(@RequestParam("id") UUID id) {
         return super.showById(id);
     }
 
@@ -84,7 +85,7 @@ public class OrderControllerImpl extends BaseController<Order,
                                                          @RequestParam("userId") UUID userId,
                                                          @RequestBody OrderDtoRequest order) {
             OrderDtoResponse orderDtoResponse = service.rentOrBuyFilm(filmsID, userId, order);
-            BaseResponse<OrderDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, orderDtoResponse, LocalDateTime.now());
+            BaseResponse<OrderDtoResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, orderDtoResponse);
             return ResponseEntity.ok(tBaseResponse);
     }
 

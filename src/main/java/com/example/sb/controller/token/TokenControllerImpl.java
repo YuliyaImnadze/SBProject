@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-
 @RestController
 public class TokenControllerImpl implements TokenController {
 
@@ -25,7 +23,7 @@ public class TokenControllerImpl implements TokenController {
     @Override
     public ResponseEntity<BaseResponse<JwtResponse>> createToken(@RequestBody JwtRequest jwtRequest) {
         JwtResponse token = tokenService.createToken(jwtRequest);
-        BaseResponse<JwtResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, token, LocalDateTime.now());
+        BaseResponse<JwtResponse> tBaseResponse = new BaseResponse<>(HttpStatus.OK, token);
         return ResponseEntity.ok(tBaseResponse);
     }
 

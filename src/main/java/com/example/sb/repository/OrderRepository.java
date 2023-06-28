@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface OrderRepository extends CommonRepository<Order> {
-    @Query("select o from Order o where o.owner.id = ?1")
+    @Query("select o from SB_ORDER o where o.owner.id = ?1")
     List<Order> findOrdersByUser(UUID id);
 
 }

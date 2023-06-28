@@ -10,13 +10,14 @@ import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
 
 public abstract class BaseController<E extends BaseEntity,
         D extends BaseEntityDtoRequest, T extends BaseEntityDtoResponse,
@@ -38,22 +39,22 @@ public abstract class BaseController<E extends BaseEntity,
     @Override
     public ResponseEntity<BaseResponse<T>> showById(@RequestParam UUID id) {
             T byId = service.findById(id);
-            BaseResponse<T> tBaseResponse = new BaseResponse<>(HttpStatus.OK, byId, LocalDateTime.now());
+            BaseResponse<T> tBaseResponse = new BaseResponse<>(HttpStatus.OK, byId);
             return ResponseEntity.ok(tBaseResponse);
     }
 
     @Override
     public ResponseEntity<BaseResponse<T>> create(@RequestBody @Valid D entity) {
             T saved = service.save(entity);
-            BaseResponse<T> tBaseResponse = new BaseResponse<>(HttpStatus.OK, saved, LocalDateTime.now());
+            BaseResponse<T> tBaseResponse = new BaseResponse<>(HttpStatus.OK, saved);
             return ResponseEntity.ok(tBaseResponse);
     }
 
 
     @Override
-    public ResponseEntity<BaseResponse<T>> update(D entity) {
+    public ResponseEntity<BaseResponse<T>> update(@RequestBody @Valid D entity) {
             T updated = service.update(entity);
-            BaseResponse<T> tBaseResponse = new BaseResponse<>(HttpStatus.OK, updated, LocalDateTime.now());
+            BaseResponse<T> tBaseResponse = new BaseResponse<>(HttpStatus.OK, updated);
             return ResponseEntity.ok(tBaseResponse);
     }
 
