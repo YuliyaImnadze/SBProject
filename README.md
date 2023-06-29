@@ -20,4 +20,4 @@ API обеспечивает защиту конфиденциальности �
 
 API задокументировано с использованием Swagger.
 
-####Технологии : Gradle, Spring-boot, Jpa (Hibernate), PostgreSQL, Lombok, Swagger, Flyway. 
+#### Технологии : Gradle, Spring-boot, Jpa (Hibernate), PostgreSQL, Lombok, Swagger, Flyway. 
