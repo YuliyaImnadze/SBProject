@@ -3,9 +3,7 @@ package com.example.sb.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity(name = "SB_DIRECTOR")
 @Table(name = "sb_director")
@@ -39,6 +37,7 @@ public class Director extends BaseEntity {
     public void setPosition(String position) {
         this.position = position;
     }
+
 
     public List<Film> getFilmList() {
         return filmList;

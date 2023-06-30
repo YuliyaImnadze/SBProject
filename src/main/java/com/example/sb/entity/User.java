@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -50,7 +51,7 @@ public class User extends BaseEntity {
     @Email
     private String email;
 
-//    @CreatedDate
+    @CreatedDate
     @Column(name = "created_when")
     private LocalDate createdWhen;
 
@@ -177,9 +178,5 @@ public class User extends BaseEntity {
                 '}';
     }
 
-    @PrePersist
-    public void prePersist() {
-        createdWhen = LocalDate.now();
-    }
 
 }

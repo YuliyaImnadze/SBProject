@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "SB_ORDER")
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "sb_order")
 public class Order extends BaseEntity {
 

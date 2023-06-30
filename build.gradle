@@ -14,6 +14,12 @@ configurations {
     }
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.example.SbApplication'
+    }
+}
+
 repositories {
     mavenCentral()
 }
