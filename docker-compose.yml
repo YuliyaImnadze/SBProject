@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  app-db:
+    image: postgres:latest
+    container_name: "app-db"
+    volumes:
+      - "/C/Users/123/docker/volume/postgres/:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5433:5432"
+
+  web:
+    image: myapp
+    container_name: "web"
+    ports:
+      - "8082:8080"
+    depends_on:
+      - "app-db"
